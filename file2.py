@@ -71,8 +71,12 @@ data.to_sql('data', con=engine, if_exists='replace', index=False)
 queryResult = engine.execute("SELECT * FROM data;").fetchall()
 
 #print(pd.DataFrame(queryResult))
-if tmp < 80:
-    print ("Only 3 employees are allowed to work today because the temperature is " + str(tmp) + "°f and it is " + str(weather_cond) )
+if tmp >=85:
+    print ("Only 3 part time employees need to work today because the temperature is " + str(tmp) + "°f and it is " + str(weather_cond) )
+elif (tmp <= 85 and tmp >= 75):
+    print("10 part employees need to work today because the temperature is " + str(tmp) + "°f and it is " + str(weather_cond))
+elif (tmp <= 75 and tmp >= 70):
+	print("5 part time employees need  to work today because the temperature is " + str(tmp) + "°f and it is " + str(weather_cond))
 else:
-    print("50 employees allowed to work")
+	print("no part time employees need for  today because the temperature is " + str(tmp) + "°f and it is " + str(weather_cond))
 
