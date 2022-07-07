@@ -61,9 +61,18 @@ report ={'name':name,
 	   'humidity':humidity,
 	   'wind':wind
       }
+
 data = pd.DataFrame(report ,index =[0])
+print(data)
+tmp = (data.loc[0].at["temp_f"])
+weather_cond = (data.loc[0]. at["weather_condition"])
 engine = db.create_engine('sqlite:///data.db')
 data.to_sql('data', con=engine, if_exists='replace', index=False)
 queryResult = engine.execute("SELECT * FROM data;").fetchall()
 
-print(pd.DataFrame(queryResult))
+#print(pd.DataFrame(queryResult))
+if tmp < 80:
+    print ("Only 3 employees are allowed to work today because the temperature is " + str(tmp) + "°f and it is " + str(weather_cond) )
+else:
+    print("50 employees allowed to work")
+
