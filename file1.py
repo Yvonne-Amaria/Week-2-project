@@ -4,28 +4,27 @@ import sqlalchemy as db
 import pandas as pd
 import pprint
 
-api_key = ''
-channelId = input("Enter Channel ID: ")
-videoID = input("Enter Video ID: ")
+url = "https://weatherapi-com.p.rapidapi.com/current.json"
 
 
-urlForVideoStats = f'https://www.googleapis.com/youtube/v3/videos?id={videoID}&part=statistics&key={api_key}'
-url_jsonrForVideoStats = requests.get(urlForVideoStats).json()
-pprint.pprint(url_jsonrForVideoStats)
-videoStats = url_jsonrForVideoStats['items'][1]['statistics']
+user = input("Enter your zipcode: ")
+querystring = {"q":user}
 
-print('countViews = ' + url_jsonrForVideoStats['items'][1]['statistics']['viewCount'])
-print('countLikes = ' + url_jsonrForVideoStats['items'][1]['statistics']['likeCount'])
-print('countDislikes = ' + url_jsonrForVideoStats['items'][1]['statistics']['dislikeCount'])
-print('countComments = ' + url_jsonrForVideoStats['items'][1]['statistics']['commentCount'])
+headers = {
+	"X-RapidAPI-Key": "4386b895d6mshc4e43be45e4ac39p1385f8jsnf87c968c7233",
+	"X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
+}
 
-df = pd.DataFrame(videoStats, index=[0])
-print(df)
+response = requests.request("GET", url, headers=headers, params=querystring)
+response2 = response.json()
+Report = response2['location']
 
-engine = db.create_engine('sqlite:///df.db')
-df.to_sql('df', con=engine, if_exists='replace', index=False)
-queryResult = engine.execute("SELECT * FROM df;").fetchall()
 
+data = pd.DataFrame(Report, index=[0])
+print(data)
+
+engine = db.create_engine('sqlite:///data.db')
+data.to_sql('data', con=engine, if_exists='replace', index=False)
+queryResult = engine.execute("SELECT * FROM data;").fetchall()
 
 print(pd.DataFrame(queryResult))
-
