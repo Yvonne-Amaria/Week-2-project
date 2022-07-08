@@ -70,5 +70,4 @@ def num_of_employees(tmp):
 
 
 employees = num_of_employees(tmp)
-print("\n" + str(employees) + " part time employees need to work today because
-      the temperature is " + str(tmp) + "°f and it is " + str(weather_cond))
+print("\n" + str(employees) + " part time employees need to work on " + str(date) + " because the temperature is " + str(tmp) + "°f and it is " + str(weather_cond))
