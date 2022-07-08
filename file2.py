@@ -17,7 +17,7 @@ date = input("Enter the DATE (YYYY-MM-DD): ")
 querystring = {"q":city_name,"dt":date}
 
 def get_report(name, country, weather_condition, temp_f, temp_c, humidity,wind):
-    dict ={
+	dict = {
         'name':name,
         'country':country,
         'weather_condition':weather_condition,
@@ -27,6 +27,7 @@ def get_report(name, country, weather_condition, temp_f, temp_c, humidity,wind):
         'wind':wind
         }
     return dict
+
 
 def get_forecast(city_name, date):
     response = requests.request("GET", url, headers=headers, params=querystring)
@@ -43,9 +44,8 @@ def get_forecast(city_name, date):
     return get_report(name, country, weather_condition, temp_f, temp_c, humidity,wind)
 
 
-
 forecast= get_forecast(city_name, date)
-data = pd.DataFrame(forecast,index =[0])
+data = pd.DataFrame(forecast,index=[0])
 tmp = (data.loc[0].at["temp_f"])
 weather_cond = (data.loc[0]. at["weather_condition"])
 engine = db.create_engine('sqlite:///data.db')
@@ -55,7 +55,6 @@ print(pd.DataFrame(queryResult))
 
 
 def num_of_employees(tmp):
-
     if tmp >=85:
         return 3 
     elif (tmp <= 85 and tmp >= 75):
@@ -64,6 +63,7 @@ def num_of_employees(tmp):
         return 5
     else:
         return 0
+
 
 employees = num_of_employees(tmp)
 print("\n" + str(employees) + " part time employees need to work today because the temperature is " + str(tmp) + "°f and it is " + str(weather_cond))
